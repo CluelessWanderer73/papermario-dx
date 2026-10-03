@@ -25,7 +25,9 @@ Stage NAMESPACE = {
     .texture = "kkj_tex",
     .shape = "kkj_bt01_shape",
     .hit = "kkj_bt01_hit",
-    .bg = "kpa_bg",
+    //.bg = "kpa_bg",
+    // Kirby: Changing from kpa_bg to nok_bg
+    .bg = "nok_bg",
     .preBattle = &N(EVS_PreBattle),
     .postBattle = &N(EVS_PostBattle),
     .foregroundModelList = N(ForegroundModels),

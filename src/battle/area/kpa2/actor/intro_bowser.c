@@ -160,7 +160,8 @@ ActorBlueprint NAMESPACE = {
 
 EvtScript N(EVS_Init) = {
     Call(SetActorVar, ACTOR_SELF, AVAR_TurnCount, 0)
-    Call(SetActorVar, ACTOR_SELF, AVAR_PeachSpoke, false)
+    // Kirby: Changing this from a bool to an int
+    Call(SetActorVar, ACTOR_SELF, AVAR_PeachSpoke, 0)
     Call(SetActorVar, ACTOR_SELF, AVAR_Unused, 0)
     Call(SetBattleMenuEnabledFlags, BTL_MENU_ENABLED_JUMP)
     Call(CreateNpc, NPC_BTL_COMPANION, ANIM_ParadePeach_IdleRaisedArms)
@@ -195,32 +196,65 @@ EvtScript N(EVS_HandlePhase) = {
     Switch(LVar0)
         CaseEq(PHASE_PLAYER_BEGIN)
             Call(GetActorVar, ACTOR_SELF, AVAR_PeachSpoke, LVar0)
-            IfEq(LVar0, false)
-                Call(SetActorVar, ACTOR_SELF, AVAR_PeachSpoke, true)
-                Call(EnableBattleStatusBar, false)
-                Call(UseBattleCamPreset, BTL_CAM_REPOSITION)
-                Call(SetBattleCamTarget, -115, 0, 0)
-                Call(SetBattleCamDist, 320)
-                Call(SetBattleCamOffsetY, 50)
-                Call(MoveBattleCamOver, 20)
-                Wait(20)
-                Call(UseIdleAnimation, ACTOR_PLAYER, false)
-                Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
-                Call(SetActorYaw, ACTOR_PLAYER, 180)
-                Call(SpeakToPlayer, ACTOR_PLAYER, ANIM_ParadePeach_Talk, ANIM_ParadePeach_IdleRaisedArms, 5, MSG_Intro_0057)
-                Call(SetJumpAnimations, ACTOR_PLAYER, 0, ANIM_Mario1_Jump, ANIM_Mario1_Jump, ANIM_Mario1_Fall)
-                Call(SetActorSpeed, ACTOR_PLAYER, Float(5.0))
-                Call(SetActorJumpGravity, ACTOR_PLAYER, Float(1.5))
-                Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_MarioB1_JumpForJoy)
-                Wait(24)
-                Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
-                Wait(10)
-                Call(SetActorYaw, ACTOR_PLAYER, 0)
-                Call(UseIdleAnimation, ACTOR_PLAYER, true)
-                Call(UseBattleCamPreset, BTL_CAM_DEFAULT)
-                Wait(20)
-                Call(EnableBattleStatusBar, true)
-            EndIf
+            // Kirby: Making this a switch case
+            //IfEq(LVar0, 0)
+            Switch(LVar0)
+                CaseEq(0)
+                    Call(SetActorVar, ACTOR_SELF, AVAR_PeachSpoke, 1)
+                    Call(EnableBattleStatusBar, false)
+                    Call(UseBattleCamPreset, BTL_CAM_REPOSITION)
+                    Call(SetBattleCamTarget, -115, 0, 0)
+                    Call(SetBattleCamDist, 320)
+                    Call(SetBattleCamOffsetY, 50)
+                    Call(MoveBattleCamOver, 20)
+                    Wait(20)
+                    Call(UseIdleAnimation, ACTOR_PLAYER, false)
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
+                    Call(SetActorYaw, ACTOR_PLAYER, 180)
+                    Call(SpeakToPlayer, ACTOR_PLAYER, ANIM_ParadePeach_Talk, ANIM_ParadePeach_IdleRaisedArms, 5, MSG_Intro_0057)
+                    Call(SetJumpAnimations, ACTOR_PLAYER, 0, ANIM_Mario1_Jump, ANIM_Mario1_Jump, ANIM_Mario1_Fall)
+                    Call(SetActorSpeed, ACTOR_PLAYER, Float(5.0))
+                    Call(SetActorJumpGravity, ACTOR_PLAYER, Float(1.5))
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_MarioB1_JumpForJoy)
+                    Wait(24)
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
+                    Wait(10)
+                    Call(SetActorYaw, ACTOR_PLAYER, 0)
+                    Call(UseIdleAnimation, ACTOR_PLAYER, true)
+                    Call(UseBattleCamPreset, BTL_CAM_DEFAULT)
+                    Wait(20)
+                    Call(EnableBattleStatusBar, true)
+                // Kirby: Then I add the following case and a default
+                CaseEq(1)
+                    Call(SetActorVar, ACTOR_SELF, AVAR_PeachSpoke, 2)
+                    Call(EnableBattleStatusBar, false)
+                    Call(UseBattleCamPreset, BTL_CAM_REPOSITION)
+                    Call(SetBattleCamTarget, -115, 0, 0)
+                    Call(SetBattleCamDist, 320)
+                    Call(SetBattleCamOffsetY, 50)
+                    Call(MoveBattleCamOver, 20)
+                    Wait(20)
+                    Call(UseIdleAnimation, ACTOR_PLAYER, false)
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
+                    Call(SetActorYaw, ACTOR_PLAYER, 180)
+                    Call(SpeakToPlayer, ACTOR_PLAYER, ANIM_ParadePeach_Talk, ANIM_ParadePeach_IdleRaisedArms, 5, MSG_Intro_0064)
+                    // Kirby: Here we turn on action commands!
+                    Call(SetActionCommandMode, AC_MODE_LEARNED)
+                    Call(SetJumpAnimations, ACTOR_PLAYER, 0, ANIM_Mario1_Jump, ANIM_Mario1_Jump, ANIM_Mario1_Fall)
+                    Call(SetActorSpeed, ACTOR_PLAYER, Float(5.0))
+                    Call(SetActorJumpGravity, ACTOR_PLAYER, Float(1.5))
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_MarioB1_JumpForJoy)
+                    Wait(24)
+                    Call(SetAnimation, ACTOR_PLAYER, 0, ANIM_Mario1_Idle)
+                    Wait(10)
+                    Call(SetActorYaw, ACTOR_PLAYER, 0)
+                    Call(UseIdleAnimation, ACTOR_PLAYER, true)
+                    Call(UseBattleCamPreset, BTL_CAM_DEFAULT)
+                    Wait(20)
+                    Call(EnableBattleStatusBar, true)
+                CaseDefault
+            //EndIf
+            EndSwitch
     EndSwitch
     Call(UseIdleAnimation, ACTOR_SELF, true)
     Return
@@ -306,10 +340,68 @@ EvtScript N(EVS_OnHit) = {
 };
 
 EvtScript N(EVS_OnDeath) = {
+    /*
     SetConst(LVar0, PRT_MAIN)
     ExecWait(EVS_Enemy_Hit)
     SetConst(LVar0, PRT_MAIN)
     ExecWait(EVS_Enemy_Death)
+    Return
+    End
+    */
+    Call(HideHealthBar, ACTOR_SELF)
+    Call(UseIdleAnimation, ACTOR_SELF, false)
+    IfNe(LVar1, -1)
+        Call(SetAnimation, ACTOR_SELF, LVar0, LVar1)
+        Wait(10)
+    EndIf
+    Call(GetDamageSource, LVar5)
+    Switch(LVar5)
+        CaseOrEq(DMG_SRC_NEXT_SLAP_LEFT)
+        CaseOrEq(DMG_SRC_NEXT_FAN_SMACK_LEFT)
+        CaseOrEq(DMG_SRC_LAST_SLAP_LEFT)
+        CaseOrEq(DMG_SRC_LAST_FAN_SMACK_LEFT)
+        CaseOrEq(DMG_SRC_NEXT_SLAP_RIGHT)
+        CaseOrEq(DMG_SRC_NEXT_FAN_SMACK_RIGHT)
+        CaseOrEq(DMG_SRC_LAST_SLAP_RIGHT)
+        CaseOrEq(DMG_SRC_LAST_FAN_SMACK_RIGHT)
+        CaseOrEq(DMG_SRC_SPIN_SMASH)
+        EndCaseGroup
+        CaseDefault
+            Set(LFlag0, false)
+            Call(GetOriginalActorType, ACTOR_SELF, LVar1)
+            Switch(LVar1)
+                CaseOrEq(ACTOR_TYPE_BOB_OMB)
+                CaseOrEq(ACTOR_TYPE_BULLET_BILL)
+                CaseOrEq(ACTOR_TYPE_BOMBSHELL_BILL)
+                EndCaseGroup
+                CaseDefault
+            EndSwitch
+            IfNe(LVar2, EXEC_DEATH_NO_SPINNING)
+                Set(LVar2, 0)
+                Loop(24)
+                    Call(SetActorYaw, ACTOR_SELF, LVar2)
+                    Add(LVar2, 30)
+                    Wait(1)
+                EndLoop
+                Call(SetActorYaw, ACTOR_SELF, 0)
+            EndIf
+    EndSwitch
+    Call(GetActorPos, ACTOR_SELF, LVar0, LVar1, LVar2)
+    Add(LVar1, 10)
+    Add(LVar2, 10)
+    PlayEffect(EFFECT_BIG_SMOKE_PUFF, LVar0, LVar1, LVar2, 0, 0, 0, 0, 0)
+    Call(PlaySoundAtActor, ACTOR_SELF, SOUND_ACTOR_DEATH)
+    Call(DropStarPoints, ACTOR_SELF)
+    Call(SetActorYaw, ACTOR_SELF, 0)
+    Set(LVar3, 0)
+    Loop(12)
+        Call(SetActorRotation, ACTOR_SELF, LVar3, 0, 0)
+        Add(LVar3, 8)
+        Wait(1)
+    EndLoop
+    Call(UseBattleCamPreset, BTL_CAM_DEFAULT)
+    ExecWait(EVS_ForceNextTarget)
+    Call(RemoveActor, ACTOR_SELF)
     Return
     End
 };
@@ -323,8 +415,13 @@ EvtScript N(EVS_TakeTurn) = {
         CaseLt(3)
             ExecWait(N(EVS_Attack_ClawSwipe))
         CaseEq(3)
-            ExecWait(N(EVS_UseStarRod))
+            //ExecWait(N(EVS_UseStarRod))
             ExecWait(N(EVS_Attack_ClawSwipe))
+        // Kirby: Added this case to cover other turns
+        CaseGt(3)
+            ExecWait(N(EVS_Attack_ClawSwipe))
+        // And removed the following cases
+        /*
         CaseEq(4)
             ExecWait(N(EVS_Attack_ClawSwipe))
         CaseEq(5)
@@ -334,6 +431,7 @@ EvtScript N(EVS_TakeTurn) = {
             Wait(30)
             Call(ActorSpeak, MSG_Intro_005C, ACTOR_SELF, PRT_MAIN, ANIM_BattleBowser_Talk, ANIM_BattleBowser_Idle)
             ExecWait(N(EVS_Attack_FireBreath))
+        */
     EndSwitch
     Return
     End
@@ -364,7 +462,8 @@ EvtScript N(EVS_Attack_ClawSwipe) = {
         Call(SetDamageSource, DMG_SRC_LAST_SLAP_LEFT)
         Call(EnemyDamageTarget, ACTOR_SELF, LVarF, DAMAGE_TYPE_NO_CONTACT, 0, 0, LVar0, BS_FLAGS1_TRIGGER_EVENTS)
     Else
-        Set(LVar0, DMG_MEGA_CLAW_SWIPE)
+        // Kirby: I have to make Bowser use the weaker attack here.
+        Set(LVar0, /*DMG_MEGA_CLAW_SWIPE*/DMG_CLAW_SWIPE)
         Call(SetDamageSource, DMG_SRC_LAST_SLAP_LEFT)
         Call(EnemyDamageTarget, ACTOR_SELF, LVarF, DAMAGE_TYPE_NO_CONTACT, 0, 0, LVar0, BS_FLAGS1_TRIGGER_EVENTS)
     EndIf
