@@ -500,12 +500,13 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
             BreakLoop
         EndIf
     EndLoop
+    Call(SetPlayerActionState, ACTION_STATE_LAND)
     Call(SetPlayerPos, 660, 0, 15)
     // Kirby: Flipping Mario
     Call(InterpPlayerYaw, 270, 0)
     Wait(1)
     // Kirby: Changing this from falldown to dustoff
-    Call(SetPlayerAnimation, ANIM_Mario1_DustOff)
+    Call(SetPlayerAnimation, ANIM_Mario1_FallDown)
     Call(SetNpcAnimation, NPC_Peach, ANIM_Peach2_GaspStill)
     // Kirby: And changing this to defeated
     Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_DefeatedIdle)
