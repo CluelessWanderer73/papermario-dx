@@ -404,7 +404,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         // I'll keep the call to disable g133 though cause that will make the window disappear
         Call(EnableGroup, MODEL_g133, false)
         //Call(EnableGroup, MODEL_g147, false)
-        //Call(EnableGroup, MODEL_g152, true)
+        Call(EnableGroup, MODEL_g152, true)
         //Call(EnableGroup, MODEL_g154, true)
         Call(PlaySoundAt, SOUND_GLASS_SHATTER, SOUND_SPACE_DEFAULT, 600, 60, -150)
         PlayEffect(EFFECT_SPARKLES, 0, 600, 60, -150, 120)

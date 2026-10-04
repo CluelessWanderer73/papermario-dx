@@ -49,6 +49,9 @@ EvtScript N(EVS_Main) = {
     EVT_SETUP_CAMERA_NO_LEAD(0, 0, 0)
     Call(MakeNpcs, false, Ref(N(DefaultNPCs)))
     Call(EnableGroup, MODEL_g156, false)
+    // Kirby: I add this here to make sure the shattered window isn't there
+    // when you enter the room
+    Call(EnableGroup, MODEL_g152, false)
     Call(SetTexPanner, MODEL_o715, TEX_PANNER_0)
     Thread
         TEX_PAN_PARAMS_ID(TEX_PANNER_0)
