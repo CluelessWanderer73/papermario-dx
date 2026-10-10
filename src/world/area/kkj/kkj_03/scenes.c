@@ -6,17 +6,17 @@
 #include "sprite.h"
 
 // Kirby: I have to add my own API call to open the status bar
-API_CALLABLE(N(OpenStatusBar)) {
+API_CALLABLE(OpenStatusBar) {
     open_status_bar_quickly();
     return ApiStatus_DONE2;
 }
-API_CALLABLE(N(CloseStatusBar)) {
+API_CALLABLE(CloseStatusBar) {
     close_status_bar();
     return ApiStatus_DONE2;
 }
 
 // Kirby: Adding all this event crap too
-API_CALLABLE(N(UpdatePropellerSoundPos_Intro)) {
+API_CALLABLE(UpdatePropellerSoundPos_Intro) {
     Npc* npc = get_npc_safe(NPC_Bowser_Prop);
     f32 x = npc->pos.x;
     f32 y = npc->pos.y;
@@ -28,7 +28,7 @@ API_CALLABLE(N(UpdatePropellerSoundPos_Intro)) {
     return ApiStatus_DONE2;
 }
 
-EvtScript N(EVS_UpdatePropellerSounds_Intro) = {
+EvtScript EVS_UpdatePropellerSounds_Intro = {
     Call(PlaySoundAtNpc, NPC_Bowser_Prop, SOUND_LOOP_BOWSER_PROPELLER, SOUND_SPACE_DEFAULT)
     Loop(0)
         Call(N(UpdatePropellerSoundPos_Intro))
@@ -42,7 +42,7 @@ EvtScript N(EVS_UpdatePropellerSounds_Intro) = {
     End
 };
 
-API_CALLABLE(N(ScreenWhiteFlashOn)) {
+API_CALLABLE(ScreenWhiteFlashOn) {
     if (isInitialCall) {
         script->functionTemp[1] = 0;
     }
@@ -63,7 +63,7 @@ API_CALLABLE(N(ScreenWhiteFlashOn)) {
     return ApiStatus_BLOCK;
 }
 
-API_CALLABLE(N(ScreenWhiteFlashOff)) {
+API_CALLABLE(ScreenWhiteFlashOff) {
     if (isInitialCall) {
         script->functionTemp[1] = 255;
     }
@@ -89,7 +89,7 @@ typedef struct GlassShardPosition {
     /* 0x02 */ s16 angle;
 } GlassShardPosition; // size = 0x4
 
-GlassShardPosition N(GlassPositions)[] = {
+GlassShardPosition GlassPositions[] = {
     { .radius =  5, .angle =   0 },
     { .radius =  5, .angle =  90 },
     { .radius =  5, .angle = 180 },
@@ -120,7 +120,7 @@ GlassShardPosition N(GlassPositions)[] = {
     { .radius = 30, .angle = 345 },
 };
 
-API_CALLABLE(N(ShatterWindow)) {
+API_CALLABLE(ShatterWindow) {
     EffectInstance* effect;
     f32 radius;
     f32 x, y;
@@ -129,11 +129,11 @@ API_CALLABLE(N(ShatterWindow)) {
     f32 posY;
     s32 i;
 
-    for (i = 0; i < ARRAY_COUNT(N(GlassPositions)); i++) {
+    for (i = 0; i < ARRAY_COUNT(GlassPositions); i++) {
         type = (i & 1) + 2;
-        radius = N(GlassPositions)[i].radius;
-        x = (radius * cos_deg(N(GlassPositions)[i].angle)) * 1.3;
-        y = (radius * sin_deg(N(GlassPositions)[i].angle)) * 1.5;
+        radius = GlassPositions[i].radius;
+        x = (radius * cos_deg(GlassPositions[i].angle)) * 1.3;
+        y = (radius * sin_deg(GlassPositions[i].angle)) * 1.5;
         posX = x + 600.0f;
         posY = y + 100.0f;
         x *= 0.1;
@@ -152,14 +152,14 @@ API_CALLABLE(N(ShatterWindow)) {
     return ApiStatus_DONE2;
 }
 
-Vec3f N(FlyThroughWindowPath)[] = {
+Vec3f FlyThroughWindowPath[] = {
     {  450.0,   150.0, -300.0 },
     {  550.0,   105.0, -180.0 },
     {  650.0,    60.0,  -75.0 },
     {  850.0,    90.0,    0.0 },
 };
 
-Vec3f N(PlayerThrownPath)[] = {
+Vec3f PlayerThrownPath[] = {
     {  660.0,     0.0,   15.0 },
     {  634.0,    60.0,  -83.0 },
     {  608.0,    80.0, -150.0 },
@@ -168,7 +168,7 @@ Vec3f N(PlayerThrownPath)[] = {
     {  530.0,   -60.0, -398.0 },
 };
 
-EvtScript N(EVS_FocusCam_Everyone) = {
+EvtScript EVS_FocusCam_Everyone = {
     Call(UseSettingsFrom, CAM_DEFAULT, 720, 0, 0)
     Call(SetPanTarget, CAM_DEFAULT, 720, 0, 0)
     Call(SetCamSpeed, CAM_DEFAULT, LVar0)
@@ -178,7 +178,7 @@ EvtScript N(EVS_FocusCam_Everyone) = {
     End
 };
 
-EvtScript N(EVS_FocusCam_OnPeach) = {
+EvtScript EVS_FocusCam_OnPeach = {
     Call(GetNpcPos, NPC_Peach, LVar0, LVar1, LVar2)
     Call(UseSettingsFrom, CAM_DEFAULT, LVar0, LVar1, LVar2)
     Call(SetPanTarget, CAM_DEFAULT, LVar0, LVar1, LVar2)
@@ -190,7 +190,7 @@ EvtScript N(EVS_FocusCam_OnPeach) = {
     End
 };
 
-EvtScript N(EVS_FocusCam_OnBowser) = {
+EvtScript EVS_FocusCam_OnBowser = {
     Call(GetNpcPos, NPC_Bowser_Body, LVar1, LVar2, LVar3)
     Call(UseSettingsFrom, CAM_DEFAULT, LVar1, LVar2, LVar3)
     Call(SetPanTarget, CAM_DEFAULT, LVar1, LVar2, LVar3)
@@ -204,7 +204,7 @@ EvtScript N(EVS_FocusCam_OnBowser) = {
 };
 // End added stuff
 
-EvtScript N(EVS_Scene_MeetingPeach) = {
+EvtScript EVS_Scene_MeetingPeach = {
     Loop(0)
         Wait(1)
         Call(GetPlayerPos, LVar0, LVar1, LVar2)
@@ -366,7 +366,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         Call(SetNpcYaw, NPC_Bowser_Body, 90)
         Call(SetNpcYaw, NPC_Bowser_Prop, 90)
         Exec(N(EVS_UpdatePropellerSounds_Intro))
-        Call(LoadPath, 50 * DT, Ref(N(FlyThroughWindowPath)), ARRAY_COUNT(N(FlyThroughWindowPath)), EASING_LINEAR)
+        Call(LoadPath, 50 * DT, Ref(FlyThroughWindowPath), ARRAY_COUNT(FlyThroughWindowPath), EASING_LINEAR)
         Loop(0)
             Call(GetNextPathPos)
             Call(SetNpcPos, NPC_Bowser_Body, LVar1, LVar2, LVar3)
@@ -384,7 +384,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         Call(SetNpcAnimation, NPC_Kammy, ANIM_WorldKammy_FlySlow)
         Call(SetNpcYaw, NPC_Kammy, 90)
         Wait(10 * DT)
-        Call(LoadPath, 50 * DT, Ref(N(FlyThroughWindowPath)), ARRAY_COUNT(N(FlyThroughWindowPath)), EASING_LINEAR)
+        Call(LoadPath, 50 * DT, Ref(FlyThroughWindowPath), ARRAY_COUNT(FlyThroughWindowPath), EASING_LINEAR)
         Loop(0)
             Call(GetNextPathPos)
             Call(SetNpcPos, NPC_Kammy, LVar1, LVar2, LVar3)
@@ -399,7 +399,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     EndThread
     Thread
         Wait(20 * DT)
-        Call(N(ScreenWhiteFlashOn))
+        Call(ScreenWhiteFlashOn)
         // Kirby: I have to disable these for now since I don't have the models in this map
         // I'll keep the call to disable g133 though cause that will make the window disappear
         Call(EnableGroup, MODEL_g133, false)
@@ -408,9 +408,9 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         //Call(EnableGroup, MODEL_g154, true)
         Call(PlaySoundAt, SOUND_GLASS_SHATTER, SOUND_SPACE_DEFAULT, 600, 60, -150)
         PlayEffect(EFFECT_SPARKLES, 0, 600, 60, -150, 120)
-        Call(N(ShatterWindow))
+        Call(ShatterWindow)
         Wait(1)
-        Call(N(ScreenWhiteFlashOff))
+        Call(ScreenWhiteFlashOff)
     EndThread
     Thread
         Wait(20 * DT)
@@ -458,7 +458,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(SetNpcAnimation, NPC_Peach, ANIM_Peach2_ArmsCrossedIdle)
     Call(SpeakToNpc, NPC_Peach, ANIM_Peach2_ArmsCrossedTalk, ANIM_Peach2_ArmsCrossedIdle, 0, NPC_Bowser_Body, MSG_Intro_0051)
     Set(LVar0, Float(1.0))
-    ExecWait(N(EVS_FocusCam_OnBowser))
+    ExecWait(EVS_FocusCam_OnBowser)
     Call(SpeakToNpc, NPC_Bowser_Body, ANIM_WorldBowser_TalkEyesClosed, ANIM_WorldBowser_Idle, 0, NPC_Peach, MSG_Intro_0052)
     Thread
         Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_Walk)
@@ -472,7 +472,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     EndThread
     Wait(5 * DT)
     Set(LVar0, Float(90.0))
-    ExecWait(N(EVS_FocusCam_Everyone))
+    ExecWait(EVS_FocusCam_Everyone)
     Wait(5 * DT)
     Call(PlayerMoveTo, 660, 0, 15 * DT)
     Call(SetPlayerAnimation, ANIM_Mario1_BeforeJump)
@@ -483,10 +483,10 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_RearUpLaugh)
     Call(SpeakToPlayer, NPC_Bowser_Body, ANIM_WorldBowser_RearUpLaugh, ANIM_WorldBowser_RearUpLaugh, 0, MSG_Intro_0055)
     Set(LVar0, Float(90.0))
-    ExecWait(N(EVS_FocusCam_OnBowser))
+    ExecWait(EVS_FocusCam_OnBowser)
     Call(SpeakToPlayer, NPC_Bowser_Body, ANIM_WorldBowser_RearUpTalk, ANIM_WorldBowser_RearUpTalk, 0, MSG_Intro_0056)
     Set(LVar0, Float(5.0))
-    ExecWait(N(EVS_FocusCam_Everyone))
+    ExecWait(EVS_FocusCam_Everyone)
     Call(SetNpcVar, NPC_Bowser_Body, 0, 0)
     Wait(5)
     Call(PlayerMoveTo, 695, 0, 10)
@@ -510,7 +510,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(SetNpcAnimation, NPC_Peach, ANIM_Peach2_GaspStill)
     // Kirby: And changing this to defeated
     Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_DefeatedIdle)
-    ExecWait(N(EVS_FocusCam_OnPeach))
+    ExecWait(EVS_FocusCam_OnPeach)
     Wait(10 * DT)
     Call(SpeakToPlayer, NPC_Peach, ANIM_Peach2_GaspStill, ANIM_Peach2_GaspStill, 5, MSG_Intro_005D)
     // Kirby: Flipping Mario
@@ -538,7 +538,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(SpeakToNpc, NPC_Bowser_Body, ANIM_WorldBowser_Talk, ANIM_WorldBowser_Idle, 0, NPC_Kammy, MSG_Intro_0060)
     Wait(10 * DT)
     Set(LVar0, Float(90.0))
-    ExecWait(N(EVS_FocusCam_Everyone))
+    ExecWait(EVS_FocusCam_Everyone)
     Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_Idle)
     Call(InterpNpcYaw, NPC_Bowser_Body, 270, 10)
     Wait(20 * DT)
@@ -552,7 +552,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(ContinueSpeech, NPC_Bowser_Body, ANIM_WorldBowser_TalkEyesClosed, ANIM_WorldBowser_Idle, 5, MSG_Intro_0066)
     Call(AddStarPoints, 30)
     Set(GB_StoryProgress, STORY_CH0_WAKE_UP)
-    Call(N(OpenStatusBar))
+    Call(OpenStatusBar)
     Wait(30 * DT)
     Loop(30)
         Call(AddStarPoints, -1)
@@ -560,7 +560,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         Wait(5 * DT)
     EndLoop
     Call(StopSound, SOUND_LRAW_QUIZ_TICKING)
-    Call(N(CloseStatusBar))
+    Call(CloseStatusBar)
     Wait(10 * DT)
     Call(SpeakToPlayer, NPC_Bowser_Body, ANIM_WorldBowser_RearUpLaugh, ANIM_WorldBowser_RearUpLaugh, 5, MSG_Intro_0067)
     // Kirby: And after this bowser leaves
@@ -608,7 +608,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     End
 };
 
-EvtScript N(EVS_TexPan_Clouds) = {
+EvtScript EVS_TexPan_Clouds = {
     Call(SetTexPanner, MODEL_o718, TEX_PANNER_2)
     Thread
         TEX_PAN_PARAMS_ID(TEX_PANNER_2)
@@ -621,7 +621,7 @@ EvtScript N(EVS_TexPan_Clouds) = {
     End
 };
 
-EvtScript N(EVS_MoveClouds) = {
+EvtScript EVS_MoveClouds = {
     Set(LVar0, 0)
     Loop(0)
         Call(TranslateGroup, MODEL_g159, 0, LVar0, 0)
@@ -632,12 +632,12 @@ EvtScript N(EVS_MoveClouds) = {
     End
 };
 
-EvtScript N(EVS_Scene_Ascending) = {
+EvtScript EVS_Scene_Ascending = {
     Call(DisablePlayerInput, true)
     Call(SetNpcPos, NPC_Peach, 680, 0, -15)
     Call(EnableGroup, MODEL_g156, true)
-    Exec(N(EVS_TexPan_Clouds))
-    Exec(N(EVS_MoveClouds))
+    Exec(EVS_TexPan_Clouds)
+    Exec(EVS_MoveClouds)
     Call(UseSettingsFrom, CAM_DEFAULT, 600, 0, -15)
     Call(SetPanTarget, CAM_DEFAULT, 600, 0, -15)
     Call(SetCamSpeed, CAM_DEFAULT, Float(90.0))
