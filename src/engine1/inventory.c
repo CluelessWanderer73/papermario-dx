@@ -990,6 +990,11 @@ void update_status_bar(void) {
         statusBar->starpointsBlinkAnimTime++;
     }
 
+    // Kirby: I think I had to make showStat false based on the flag
+    if (evt_get_variable(nullptr, GB_StoryProgress) == STORY_INTRO) {
+        showStat = false;
+    }
+
     if (showStat) {
         id = statusBar->spIconHID;
         x = statusBar->drawPosX + 195;

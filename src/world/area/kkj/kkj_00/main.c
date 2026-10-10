@@ -6,6 +6,10 @@ EvtScript N(EVS_ExitDoors_kkj_01_0) = EVT_EXIT_DOUBLE_DOOR_SET_SOUNDS(kkj_00_ENT
 EvtScript N(EVS_ExitDoor_kkj_19_0) = EVT_EXIT_SINGLE_DOOR_SET_SOUNDS(kkj_00_ENTRY_3, "kkj_19", kkj_19_ENTRY_0,
     COLLIDER_ttne, MODEL_door8, DOOR_SWING_OUT, DOOR_SOUNDS_BASIC);
 
+// Kirby: Adding a script here to go through the door outside
+EvtScript N(EVS_ExitDoors_osr_00_0) = EVT_EXIT_DOUBLE_DOOR_SET_SOUNDS(kkj_00_ENTRY_0, "osr_00", osr_00_ENTRY_2,
+    COLLIDER_tts, MODEL_door1, MODEL_door2, DOOR_SOUNDS_LARGE);
+
 EvtScript N(EVS_ShowMessage_CantOpen) = {
     Call(DisablePlayerInput, true)
     Call(ShowMessageAtScreenPos, MSG_Menus_Inspect_DoesntOpen, 160, 40)
@@ -30,7 +34,12 @@ EvtScript N(EVS_PreventFrontDoorExit) = {
 };
 
 EvtScript N(EVS_BindDoorTriggers) = {
-    BindTrigger(Ref(N(EVS_PreventFrontDoorExit)), TRIGGER_WALL_PRESS_A, COLLIDER_tts, 1, 0)
+    // Kirby: Adding an if statement here with an alternate bindtrigger
+    IfEq(GB_StoryProgress, STORY_INTRO)
+        BindTrigger(Ref(N(EVS_PreventFrontDoorExit)), TRIGGER_WALL_PRESS_A, COLLIDER_tts, 1, 0)
+    Else
+        BindTrigger(Ref(N(EVS_ExitDoors_osr_00_0)), TRIGGER_WALL_PRESS_A, COLLIDER_tts, 1, 0)
+    EndIf
     BindTrigger(Ref(N(EVS_ShowMessage_CantOpen)), TRIGGER_WALL_PRESS_A, COLLIDER_ttw, 1, 0)
     BindTrigger(Ref(N(EVS_ShowMessage_CantOpen)), TRIGGER_WALL_PRESS_A, COLLIDER_tte, 1, 0)
     BindTrigger(Ref(N(EVS_ExitDoors_kkj_01_0)), TRIGGER_WALL_PRESS_A, COLLIDER_ttn, 1, 0)

@@ -78,6 +78,8 @@ EvtScript N(EVS_Main) = {
     EndSwitch
     ExecWait(N(EVS_MakeEntities))
     Switch(GB_StoryProgress)
+        // Kirby: Gonna try removing the non-default cases to see if I can open up this area
+        /*
         CaseLt(STORY_CH0_TWINK_GAVE_LUCKY_STAR)
             Call(EnableGroup, MODEL_st2, false)
             Call(EnableGroup, MODEL_st3, false)
@@ -85,7 +87,8 @@ EvtScript N(EVS_Main) = {
             Call(EnableGroup, MODEL_st1, false)
             Call(EnableGroup, MODEL_st3, false)
             Call(ModifyColliderFlags, MODIFY_COLLIDER_FLAGS_SET_BITS, COLLIDER_st1, COLLIDER_FLAGS_UPPER_MASK)
-        CaseDefault
+        */
+            CaseDefault
             Call(EnableGroup, MODEL_st1, false)
             Call(EnableGroup, MODEL_st2, false)
             Call(ModifyColliderFlags, MODIFY_COLLIDER_FLAGS_SET_BITS, COLLIDER_g47, COLLIDER_FLAGS_UPPER_MASK)

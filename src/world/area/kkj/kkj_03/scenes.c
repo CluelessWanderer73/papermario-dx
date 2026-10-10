@@ -506,7 +506,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(InterpPlayerYaw, 270, 0)
     Wait(1)
     // Kirby: Changing this from falldown to dustoff
-    Call(SetPlayerAnimation, ANIM_Mario1_FallDown)
+    Call(SetPlayerAnimation, ANIM_Mario1_DustOff)
     Call(SetNpcAnimation, NPC_Peach, ANIM_Peach2_GaspStill)
     // Kirby: And changing this to defeated
     Call(SetNpcAnimation, NPC_Bowser_Body, ANIM_WorldBowser_DefeatedIdle)
@@ -551,12 +551,13 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
     Call(SetPlayerAnimation, ANIM_MarioW2_PanicStill) //Not sure if this is the best one to use here.
     Call(ContinueSpeech, NPC_Bowser_Body, ANIM_WorldBowser_TalkEyesClosed, ANIM_WorldBowser_Idle, 5, MSG_Intro_0066)
     Call(AddStarPoints, 30)
+    Set(GB_StoryProgress, STORY_CH0_WAKE_UP)
     Call(N(OpenStatusBar))
     Wait(30 * DT)
     Loop(30)
         Call(AddStarPoints, -1)
         Call(PlaySound, SOUND_LRAW_QUIZ_TICKING)
-        Wait(10 * DT)
+        Wait(5 * DT)
     EndLoop
     Call(StopSound, SOUND_LRAW_QUIZ_TICKING)
     Call(N(CloseStatusBar))
