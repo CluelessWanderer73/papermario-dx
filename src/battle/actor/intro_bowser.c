@@ -388,7 +388,7 @@ EvtScript EVS_OnDeath = {
     Call(GetActorPos, ACTOR_SELF, LVar0, LVar1, LVar2)
     Add(LVar1, 10)
     Add(LVar2, 10)
-    PlayEffect(EFFECT_BIG_SMOKE_PUFF, LVar0, LVar1, LVar2, 0, 0, 0, 0, 0)
+    PlayEffect(EFFECT_BIG_SMOKE_PUFF, LVar0, LVar1, LVar2)
     Call(PlaySoundAtActor, ACTOR_SELF, SOUND_ACTOR_DEATH)
     Call(DropStarPoints, ACTOR_SELF)
     Call(SetActorYaw, ACTOR_SELF, 0)

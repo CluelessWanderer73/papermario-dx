@@ -31,7 +31,7 @@ API_CALLABLE(UpdatePropellerSoundPos_Intro) {
 EvtScript EVS_UpdatePropellerSounds_Intro = {
     Call(PlaySoundAtNpc, NPC_Bowser_Prop, SOUND_LOOP_BOWSER_PROPELLER, SOUND_SPACE_DEFAULT)
     Loop(0)
-        Call(N(UpdatePropellerSoundPos_Intro))
+        Call(UpdatePropellerSoundPos_Intro)
         IfLt(LVar0, 0)
             BreakLoop
         EndIf
@@ -365,7 +365,7 @@ EvtScript N(EVS_Scene_BowserAttacks) = {
         Call(SetNpcAnimation, NPC_Bowser_Prop, ANIM_WorldBowser_ClownCarPropeller)
         Call(SetNpcYaw, NPC_Bowser_Body, 90)
         Call(SetNpcYaw, NPC_Bowser_Prop, 90)
-        Exec(N(EVS_UpdatePropellerSounds_Intro))
+        Exec(EVS_UpdatePropellerSounds_Intro)
         Call(LoadPath, 50 * DT, Ref(FlyThroughWindowPath), ARRAY_COUNT(FlyThroughWindowPath), EASING_LINEAR)
         Loop(0)
             Call(GetNextPathPos)
