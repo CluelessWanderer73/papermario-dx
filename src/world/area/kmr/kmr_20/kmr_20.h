@@ -33,6 +33,8 @@ enum {
     MF_ReadyForPlayerEntry      = MapFlag(11),
     MF_HouseInteriorVisible     = MapFlag(12),
     MF_LuigiInBasement          = MapFlag(13),
+    // Kirby: Adding a flag for the Hammer
+    MF_GotHammerDone            = MapFlag(14),
 };
 
 extern EvtScript EVS_Main;

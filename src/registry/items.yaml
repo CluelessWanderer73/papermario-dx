@@ -56,8 +56,8 @@
     potencyB: 0
 - Hammer:
     nameMsg: MSG_ItemName_Hammer
-    fullDescMsg: MSG_NONE
-    shortDescMsg: MSG_NONE
+    fullDescMsg: MSG_ItemFullDesc_Hammer
+    shortDescMsg: MSG_ItemShortDesc_Hammer
     icon: gear/hammer_1
     itemEntityTemplate: STANDARD
     hudElementTemplate: ITEM

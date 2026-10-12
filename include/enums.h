@@ -2272,7 +2272,7 @@ enum VisibilityGroup {
 };
 
 enum ItemSpawnModes {
-    ITEM_SPAWN_MODE_KEY                                          = 0x00000000,
+    ITEM_SPAWN_MODE_KEY                                          = 0x00000000, //Used for key items on the ground in overworld that don't disappear
     ITEM_SPAWN_MODE_DECORATION                                   = 0x00000001,
     ITEM_SPAWN_MODE_INVISIBLE                                    = 0x00000002,
     ITEM_SPAWN_MODE_TOSS_SPAWN_ALWAYS                            = 0x00000003,
@@ -2289,7 +2289,7 @@ enum ItemSpawnModes {
     ITEM_SPAWN_MODE_FALL                                         = 0x0000000E,
     ITEM_SPAWN_MODE_FALL_SPAWN_ONCE                              = 0x0000000F,
     ITEM_SPAWN_MODE_FIXED_SPAWN_ALWAYS                           = 0x00000010,
-    ITEM_SPAWN_MODE_FIXED_NEVER_VANISH                           = 0x00000011,
+    ITEM_SPAWN_MODE_FIXED_NEVER_VANISH                           = 0x00000011, //This is used for items just sitting out in the overworld to pick up
     ITEM_SPAWN_MODE_FIXED                                        = 0x00000012,
     ITEM_SPAWN_MODE_FIXED_SPAWN_ALWAYS_NEVER_VANISH              = 0x00000013,
     ITEM_SPAWN_MODE_ITEM_BLOCK_SPAWN_ALWAYS                      = 0x00000014,

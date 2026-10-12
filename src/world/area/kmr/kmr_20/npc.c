@@ -201,12 +201,20 @@ EvtScript EVS_Scene_LuigiWaitingAround = {
         CaseEq(PARTNER_PARAKARRY)
             Call(SpeakToPlayer, NPC_PARTNER, PARTNER_ANIM_TALK, PARTNER_ANIM_IDLE, 5, MSG_CH0_00E2)
         CaseDefault
-            Call(SpeakToPlayer, NPC_PARTNER, PARTNER_ANIM_STILL, PARTNER_ANIM_HURT, 5, MSG_CH0_00DB)
+            // Kirby: This default case is completely nonsensical!
+            // Looks like they just left some weird placeholder here
+            // If the partner isn't any of the above, they have their hurt animation
+            // and say luigi's line of "I wonder what my brother mario is doing right now..."
+            // In any case, I have to remove this because if there's no partner, it shouldn't
+            // try to have the partner animate.
+            //Call(SpeakToPlayer, NPC_PARTNER, PARTNER_ANIM_STILL, PARTNER_ANIM_HURT, 5, MSG_CH0_00DB)
     EndSwitch
     Call(SpeakToPlayer, NPC_Luigi_1, ANIM_Luigi_Talk, ANIM_Luigi_Idle, 5, MSG_CH0_00E3)
     Call(SetNpcFlagBits, NPC_Luigi_1, NPC_FLAG_GRAVITY, false)
     Call(SetNpcFlagBits, NPC_Luigi_1, NPC_FLAG_FLYING, true)
-    Call(EnablePartnerAI)
+    // Kirby: Temporarily disabling this cause I think it's crashing since there's no partner
+    // at this point.
+    //Call(EnablePartnerAI)
     Call(SetCamSpeed, CAM_DEFAULT, Float(3.5))
     Call(PanToTarget, CAM_DEFAULT, 0, false)
     Wait(15)

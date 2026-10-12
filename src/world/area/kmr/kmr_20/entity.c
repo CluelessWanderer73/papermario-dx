@@ -1,5 +1,37 @@
 #include "kmr_20.h"
 #include "entity.h"
+// Kirby: I have to add this here
+#include "sprite/player.h"
+#include "effects.h"
+#include "include_asset.h"
+// and all the stuff below
+#include "world/area/kmr/kmr_04/hammer_block_message.png.h"
+INCLUDE_IMG("world/area/kmr/kmr_04/hammer_block_message.png", kmr_04_hammer_block_message_img);
+INCLUDE_PAL("world/area/kmr/kmr_04/hammer_block_message.pal", kmr_04_hammer_block_message_pal);
+
+static MessageImageData MessageImage;
+
+API_CALLABLE(SetMessageImage_HammerBlock) {
+    MessageImage.raster = kmr_04_hammer_block_message_img;
+    MessageImage.palette = kmr_04_hammer_block_message_pal;
+    MessageImage.width = kmr_04_hammer_block_message_img_width;
+    MessageImage.height = kmr_04_hammer_block_message_img_height;
+    MessageImage.format = G_IM_FMT_CI;
+    MessageImage.bitDepth = G_IM_SIZ_4b;
+    set_message_images(&MessageImage);
+    return ApiStatus_DONE2;
+}
+
+
+// Kirby: Adding the upgrade song
+EvtScript EVS_PlayUpgradeSong = {
+    Call(PushSong, SONG_ITEM_UPGRADE, 0)
+    Wait(130)
+    Call(PopSong)
+    Return
+    End
+};
+// end added stuff
 
 API_CALLABLE(SetAmbienceVolumeHalf_Entity){
     snd_ambient_set_volume(0, 1000, 63);
@@ -141,6 +173,13 @@ EvtScript EVS_MakeEntities = {
             Call(AssignScript, Ref(EVS_BreakBlock_Brick))
         CaseLt(STORY_EPILOGUE)
     EndSwitch
+    // Kirby: Adding this cause I need to put an item you can pick up to get the hammer
+    Call(MakeItemEntity, ITEM_HAMMER, 141, 51, -49, ITEM_SPAWN_MODE_KEY, GF_Unused_KMR_0E)
+    // Looks like while this works for normal pick-up items, it won't work for the hammer
+    // so I'll add a script to it!
+    // Attempt 1: This doesn't work unfortunately, I guess because AssignScript is for entities and
+    // not item entities. Whatever :/
+    // Attempt 2: I just needed to change the item spawn mode to ITEM_SPAWN_MODE_KEY
     Return
     End
 };
